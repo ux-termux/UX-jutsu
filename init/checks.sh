@@ -13,14 +13,6 @@ _checkBashReq() {
     command -v jq &> /dev/null || quit "Required command : jq : could not be found !"
 }
 
-_checkPythonVersion() {
-    log "Checking Python Version ..."
-    getPythonVersion
-    ( test -z $pVer || test $(sed 's/\.//g' <<< $pVer) -lt 3${minPVer}0 ) \
-        && quit "You MUST have a python version of at least 3.$minPVer.0 !"
-    log "\tFound PYTHON - v$pVer ..."
-}
-
 _checkConfigFile() {
     log "Checking Config File ..."
     configPath="config.env"
@@ -50,7 +42,7 @@ _checkDefaultVars() {
         [WORKERS]=0
         [PREFERRED_LANGUAGE]="en"
         [DOWN_PATH]="downloads"
-        [UPSTREAM_REPO]="https://github.com/ashwinstr/UX-jutsu"
+        [UPSTREAM_REPO]="https://github.com/anonymous-x97/UX-jutsu"
         [UPSTREAM_REMOTE]="upstream"
         [LOAD_UNOFFICIAL_PLUGINS]=true
         [CUSTOM_PLUGINS_REPO]=""
@@ -123,7 +115,7 @@ _checkPaths() {
 _checkUpstreamRepo() {
     remoteIsExist $UPSTREAM_REMOTE || addUpstream
     editLastMessage "Fetching Data From UPSTREAM_REPO..."
-    fetchUpstream || updateUpstream && fetchUpstream || "Invalid UPSTREAM_REPO var !"
+    fetchUpstream || updateUpstream && fetchUpstream || quit "Invalid UPSTREAM_REPO var !"
     fetchBranches
     updateBuffer
 }
@@ -163,8 +155,6 @@ _flushMessages() {
 }
 
 assertPrerequisites() {
-    _changePythonVer
-    _installReq
     _checkBashReq
     _checkPythonVersion
     _checkConfigFile
