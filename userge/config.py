@@ -15,7 +15,7 @@ from json.decoder import JSONDecodeError
 from re import compile as comp_regex
 from typing import Set
 
-import heroku3 
+#import heroku3 
 from git import Repo
 from pyrogram import filters
 from requests import Session
@@ -78,8 +78,8 @@ class Config:
     GOOGLE_CHROME_DRIVER = os.environ.get("GOOGLE_CHROME_DRIVER")
     GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN")
     GENIUS = os.environ.get("GENIUS")
-    HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY")
-    HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME")
+#    HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY")
+#    HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME")
     G_DRIVE_IS_TD = os.environ.get("G_DRIVE_IS_TD") == "true"
     LOAD_UNOFFICIAL_PLUGINS = os.environ.get("LOAD_UNOFFICIAL_PLUGINS") == "true"
     THUMB_PATH = DOWN_PATH + "thumb_image.jpg"
@@ -101,12 +101,12 @@ class Config:
     ANTISPAM_SENTRY = False
     SPAM_PROTECTION = False
     RUN_DYNO_SAVER = False
-    HEROKU_ENV = bool(int(os.environ.get("HEROKU_ENV", "0")))
-    HEROKU_APP = (
-        heroku3.from_key(HEROKU_API_KEY).apps()[HEROKU_APP_NAME]
-        if HEROKU_ENV and HEROKU_API_KEY and HEROKU_APP_NAME
-        else None
-    )
+#    HEROKU_ENV = bool(int(os.environ.get("HEROKU_ENV", "0")))
+#    HEROKU_APP = (
+#        heroku3.from_key(HEROKU_API_KEY).apps()[HEROKU_APP_NAME]
+#        if HEROKU_ENV and HEROKU_API_KEY and HEROKU_APP_NAME
+#        else None
+#    )
     STATUS = None
     BOT_FORWARDS = False
     BOT_MEDIA = os.environ.get("BOT_MEDIA")
