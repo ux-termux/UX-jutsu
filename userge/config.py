@@ -15,7 +15,7 @@ from json.decoder import JSONDecodeError
 from re import compile as comp_regex
 from typing import Set
 
-import heroku3
+import heroku3 
 from git import Repo
 from pyrogram import filters
 from requests import Session
@@ -63,7 +63,7 @@ class Config:
     INSTA_ID = os.environ.get("INSTA_ID")
     INSTA_PASS = os.environ.get("INSTA_PASS")
     UPSTREAM_REPO = os.environ.get("UPSTREAM_REPO")
-    UPSTREAM_REMOTE = os.environ.get("UPSTREAM_REMOTE")
+    UPSTREAM_REMOTE = os.environ.get("UPSTREAM_REMOTE", "upstream")
     SPAM_WATCH_API = os.environ.get("SPAM_WATCH_API")
     CURRENCY_API = os.environ.get("CURRENCY_API")
     OCR_SPACE_API_KEY = os.environ.get("OCR_SPACE_API_KEY")
