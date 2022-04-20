@@ -50,8 +50,8 @@ _checkDefaultVars() {
         [WORKERS]=0
         [PREFERRED_LANGUAGE]="en"
         [DOWN_PATH]="downloads"
+        [UPSTREAM_REPO]="https://github.com/ashwinstr/UX-jutsu"
         [UPSTREAM_REMOTE]="upstream"
-        [UPSTREAM_REPO]="https://github.com/code-rgb/USERGE-X"
         [LOAD_UNOFFICIAL_PLUGINS]=true
         [CUSTOM_PLUGINS_REPO]=""
         [G_DRIVE_IS_TD]=true
@@ -122,35 +122,36 @@ _checkPaths() {
 
 _checkUpstreamRepo() {
     remoteIsExist $UPSTREAM_REMOTE || addUpstream
-    editLastMessage "Fetching Data From UPSTREAM_REPO ..."
-    fetchUpstream || updateUpstream && fetchUpstream || quit "Invalid UPSTREAM_REPO var !"
+    editLastMessage "Fetching Data From UPSTREAM_REPO..."
+    fetchUpstream || updateUpstream && fetchUpstream || "Invalid UPSTREAM_REPO var !"
     fetchBranches
     updateBuffer
 }
 
-_setupPlugins() {
-    local link path tmp
-    if test $(grep -P '^'$2'$' <<< $3); then
-        editLastMessage "Cloning $1 Plugins ..."
-        link=$(test $4 && echo $4 || echo $3)
-        tmp=Temp-Plugins
-        gitClone --depth=1 $link $tmp
-        replyLastMessage "\tInstalling Requirements ..."
-        upgradePip
-        installReq $tmp
-        path=$(tr "[:upper:]" "[:lower:]" <<< $1)
-        rm -rf userge/plugins/$path/
-        mv $tmp/plugins/ userge/plugins/$path/
-        cp -r $tmp/resources/. resources/
-        rm -rf $tmp/
-        deleteLastMessage
-    else
-        editLastMessage "$1 Plugins Disabled !"
-    fi
-}
+#_setupPlugins() {
+#    local link path tmp
+#    if test $(grep -P '^'$2'$' <<< $3); then
+#        editLastMessage "Cloning $1 Plugins ..."
+#        link=$(test $4 && echo $4 || echo $3)
+#        tmp=Temp-Plugins
+#        gitClone --depth=1 $link $tmp
+#        replyLastMessage "\tInstalling Requirements ..."
+#        upgradePip
+#        installReq $tmp
+#        path=$(tr "[:upper:]" "[:lower:]" <<< $1)
+#        rm -rf userge/plugins/$path/
+#        mv $tmp/plugins/ userge/plugins/$path/
+#        cp -r $tmp/resources/. resources/
+#        rm -rf $tmp/
+#        deleteLastMessage
+#    else
+#        editLastMessage "$1 Plugins Disabled !"
+#    fi
+#}
 
 _checkUnoffPlugins() {
-    _setupPlugins Xtra true $LOAD_UNOFFICIAL_PLUGINS https://github.com/ashwinstr/Userge-Plugins-Fork.git
+    # _setupPlugins Xtra true $LOAD_UNOFFICIAL_PLUGINS https://github.com/ashwinstr/Userge-Plugins-Fork.git
+    echo 'Kakashi removed XTRA plugins repo.'
 }
 
 _checkCustomPlugins() {
@@ -162,6 +163,8 @@ _flushMessages() {
 }
 
 assertPrerequisites() {
+    _changePythonVer
+    _installReq
     _checkBashReq
     _checkPythonVersion
     _checkConfigFile
