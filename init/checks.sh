@@ -8,10 +8,10 @@
 #
 # All rights reserved.
 
-_checkBashReq() {
-    log "Checking Bash Commands ..."
-    command -v jq &> /dev/null || quit "Required command : jq : could not be found !"
-}
+#_checkBashReq() {
+#    log "Checking Bash Commands ..."
+#    command -v jq &> /dev/null || quit "Required command : jq : could not be found !"
+#}
 
 _checkConfigFile() {
     log "Checking Config File ..."
@@ -155,7 +155,7 @@ _flushMessages() {
 }
 
 assertPrerequisites() {
-    _checkBashReq
+#    _checkBashReq
     _checkPythonVersion
     _checkConfigFile
     _checkRequiredVars
@@ -167,7 +167,7 @@ assertEnvironment() {
     _checkTriggers
     _checkPaths
     _checkUpstreamRepo
-    _checkUnoffPlugins
-    _checkCustomPlugins
+#    _checkUnoffPlugins
+#    _checkCustomPlugins
     _flushMessages
 }
