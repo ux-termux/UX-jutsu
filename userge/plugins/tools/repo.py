@@ -18,6 +18,7 @@ from userge import Config, Message, userge
             "-g": "MyGpack",
         },
     },
+    & ~filters.edited,
 )
 async def see_repo(message: Message):
     """see repo"""
