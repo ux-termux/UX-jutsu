@@ -21,7 +21,7 @@ from .filter import Filter
 from ... import client as _client  # pylint: disable=unused-import
 
 
-class Command(Filter & ~filters.edited):
+class Command(Filter):
     """ command class """
     def __init__(self, about: str, trigger: str, pattern: str,
                  **kwargs: Union['_client.Userge', int, str, bool]) -> None:
