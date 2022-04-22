@@ -28,7 +28,7 @@ class Command(Filter):
         self.about = about
         self.trigger = trigger
         self.pattern = pattern
-        super().__init__(**Filters.parse(**kwargs))  # pylint: disable=protected-access
+        super().__init__(**Filters._parse(**kwargs))  # pylint: disable=protected-access
 
     @classmethod
     def parse(cls, command: str,  # pylint: disable=arguments-differ
