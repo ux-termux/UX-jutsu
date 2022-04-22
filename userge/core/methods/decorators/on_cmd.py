@@ -26,6 +26,7 @@ class OnCmd(RawDecorator):  # pylint: disable=missing-class-docstring
                name: str = '',
                trigger: str = Config.CMD_TRIGGER,
                filter_me: bool = True,
+               filters_edited = True,
                allow_private: bool = True,
                allow_bots: bool = True,
                allow_groups: bool = True,
