@@ -141,7 +141,7 @@ class OnCmd(RawDecorator):  # pylint: disable=missing-class-docstring
         """
         return self._build_decorator(
             types.raw.Command.parse(command, about,
-                                    trigger, name, filter_me,
+                                    trigger, name, filter_me, filters_edited,
                                     client=self,
                                     group=group,
                                     allow_private=allow_private,
