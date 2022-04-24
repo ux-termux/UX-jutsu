@@ -128,7 +128,8 @@ class Userge(_AbstractUserge):
         kwargs = {
             'api_id': Config.API_ID,
             'api_hash': Config.API_HASH,
-            'workers': Config.WORKERS
+            'workers': Config.WORKERS,
+            'name': 'ux'
         }
         if Config.BOT_TOKEN:
             kwargs['bot_token'] = Config.BOT_TOKEN
