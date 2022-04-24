@@ -16,14 +16,6 @@ _installReq() {
     pip install -U pyrogram
     echo 'Requirements are installed...'
 }
-_installstring() {
-    python
-    import pyrogram
-    c = pyrogram.Client(name="ux", session_string=("'HU_STRING_SESSION'"), in_memory=True)
-    c.start()
-    c.export_session_string()
-}
-
 _checkConfigFile() {
     log "Checking Config File ..."
     configPath="config.env"
@@ -180,6 +172,5 @@ assertEnvironment() {
     _checkUpstreamRepo
 #    _checkUnoffPlugins
 #    _checkCustomPlugins
-    _installstring
     _flushMessages
 }
