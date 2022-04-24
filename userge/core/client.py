@@ -129,7 +129,7 @@ class Userge(_AbstractUserge):
             'api_id': Config.API_ID,
             'api_hash': Config.API_HASH,
             'workers': Config.WORKERS,
-            'name': name,
+            'name': 'ux',
             'in_memory': True,
         }
         if Config.BOT_TOKEN:
