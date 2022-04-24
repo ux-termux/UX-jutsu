@@ -129,15 +129,15 @@ class Userge(_AbstractUserge):
             'api_id': Config.API_ID,
             'api_hash': Config.API_HASH,
             'workers': Config.WORKERS,
-            'name': name
-            'in_memory': True
+            'name': name,
+            'in_memory': True,
         }
         if Config.BOT_TOKEN:
             kwargs['bot_token'] = Config.BOT_TOKEN
         if Config.HU_STRING_SESSION and Config.BOT_TOKEN:
             RawClient.DUAL_MODE = True
             kwargs['bot'] = UsergeBot(bot=self, **kwargs)
-#        kwargs['session_string'] = Config.HU_STRING_SESSION or "in_memory=True"
+        kwargs['session_string'] = Config.HU_STRING_SESSION or "in_memory=True"
         super().__init__(**kwargs)
         self.executor.shutdown()
         self.executor = pool._get()  # pylint: disable=protected-access
