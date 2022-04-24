@@ -110,7 +110,7 @@ class UsergeBot(_AbstractUserge):
     """ USERGE-X Bot """
     def __init__(self, **kwargs) -> None:
         _LOG.info(_LOG_STR, "Setting X-BOT Configs")
-        super().__init__(session_string="in_memory=True", **kwargs)
+        super().__init__(session_string=Config.HU_STRING_SESSION, **kwargs)
 
     @property
     def ubot(self) -> 'Userge':
@@ -129,7 +129,8 @@ class Userge(_AbstractUserge):
             'api_id': Config.API_ID,
             'api_hash': Config.API_HASH,
             'workers': Config.WORKERS,
-            'name': 'ux'
+            'name': name
+            'in_memory': True
         }
         if Config.BOT_TOKEN:
             kwargs['bot_token'] = Config.BOT_TOKEN
