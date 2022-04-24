@@ -110,7 +110,7 @@ class UsergeBot(_AbstractUserge):
     """ USERGE-X Bot """
     def __init__(self, **kwargs) -> None:
         _LOG.info(_LOG_STR, "Setting X-BOT Configs")
-        super().__init__(name="in_memory=True", **kwargs)
+        super().__init__(session_string="in_memory=True", **kwargs)
 
     @property
     def ubot(self) -> 'Userge':
@@ -136,6 +136,7 @@ class Userge(_AbstractUserge):
             RawClient.DUAL_MODE = True
             kwargs['bot'] = UsergeBot(bot=self, **kwargs)
         kwargs['session_string'] = Config.HU_STRING_SESSION or "in_memory=True"
+        kwargs['name'] = 'ux'
         super().__init__(**kwargs)
         self.executor.shutdown()
         self.executor = pool._get()  # pylint: disable=protected-access
