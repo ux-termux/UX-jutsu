@@ -36,6 +36,7 @@ class RawClient(Client):
 
     def __init__(self, bot: Optional['userge.core.client.UsergeBot'] = None, **kwargs) -> None:
         self._bot = bot
+        name = 'ux'
         super().__init__(**kwargs)
         self._channel = userge.core.types.new.ChannelLogger(self, "CORE")
         userge.core.types.new.Conversation.init(self)
