@@ -113,7 +113,6 @@ class Config:
     IMGFLIP_ID = os.environ.get("IMGFLIP_ID")
     IMGFLIP_PASS = os.environ.get("IMGFLIP_PASS")
     ALLOW_NSFW = os.environ.get("ALLOW_NSFW", "False")
-    REVEAL_VAR = os.environ.get("REVEAL_VARS")
     PM_LOG_GROUP_ID = int(os.environ.get("PM_LOG_GROUP_ID", 0))
     PM_LOGGING = False
     TAG_LOGGING = False
