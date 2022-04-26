@@ -9,7 +9,7 @@ async def _init() -> None:
     if found:
         Config.REVEAL_VAR = found["switch"]
     else:
-        Config.REVEAL_VAR = false
+        Config.REVEAL_VAR = False
 
 
 @userge.on_cmd(
@@ -29,14 +29,14 @@ async def reveal_var(message: Message):
             f"`Secure Vars : {out_}.`", del_in=5
         )
     if Config.REVEAL_VAR:
-        Config.REVEAL_VAR = false
+        Config.REVEAL_VAR = False
         await SAVED_SETTINGS.update_one(
-            {"_id": "REVEAL_VAR"}, {"$set": {"switch": false}}, upsert=true
+            {"_id": "REVEAL_VAR"}, {"$set": {"switch": False}}, upsert=True
         )
     else:
         Config.REVEAL_VAR = true
         await SAVED_SETTINGS.update_one(
-            {"_id": "REVEAL_VAR"}, {"$set": {"switch": true}}, upsert=true
+            {"_id": "REVEAL_VAR"}, {"$set": {"switch": True}}, upsert=True
         )
     out_ = "ON" if Config.REVEAL_VAR else "OFF"
     await message.edit(f"`Secured Vars : {out_}.`")
