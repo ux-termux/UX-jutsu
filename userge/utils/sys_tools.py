@@ -74,6 +74,6 @@ def secure_text(text: str) -> str:
         return ""
     for var in _SECURE:
         tvar = environ.get(var, None)
-        if tvar and tvar in text and if Config.REVEAL_VAR:
+        if tvar and tvar in text and Config.REVEAL_VAR:
             text = text.replace(tvar, "[SECURED!]")
     return text
