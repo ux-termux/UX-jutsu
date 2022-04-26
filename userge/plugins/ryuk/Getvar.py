@@ -1,5 +1,45 @@
 import os
-from userge import userge, Message
+import io
+from userge import Config, Message, get_collection, userge
+
+SAVED_SETTINGS = get_collection("CONFIGS")
+
+async def _init() -> None:
+    found = await SAVED_SETTINGS.find_one({"_id": "REVEAL_VAR"})
+    if found:
+        Config.REVEAL_VAR = found["switch"]
+    else:
+        Config.REVEAL_VAR = false
+
+
+@userge.on_cmd(
+    "reveal_vars",
+    about={
+        "header": "enable fetching secured vars",
+        "flags": {
+            "-c": "check",
+        },
+        "usage": "{tr}reveal_vars",
+    },
+)
+async def reveal_var(message: Message):
+    if "-c" in message.flags:
+        out_ = "ON" if Config.REVEAL_VAR else "OFF"
+        return await message.edit(
+            f"`Secure Vars : {out_}.`", del_in=5
+        )
+    if Config.REVEAL_VAR:
+        Config.REVEAL_VAR = false
+        await SAVED_SETTINGS.update_one(
+            {"_id": "REVEAL_VAR"}, {"$set": {"switch": false}}, upsert=true
+        )
+    else:
+        Config.REVEAL_VAR = true
+        await SAVED_SETTINGS.update_one(
+            {"_id": "REVEAL_VAR"}, {"$set": {"switch": true}}, upsert=true
+        )
+    out_ = "ON" if Config.REVEAL_VAR else "OFF"
+    await message.edit(f"`Secured Vars : {out_}.`")
 
 
 @userge.on_cmd(
