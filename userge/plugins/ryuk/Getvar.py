@@ -34,7 +34,7 @@ async def reveal_var(message: Message):
             {"_id": "REVEAL_VAR"}, {"$set": {"switch": False}}, upsert=True
         )
     else:
-        Config.REVEAL_VAR = true
+        Config.REVEAL_VAR = True
         await SAVED_SETTINGS.update_one(
             {"_id": "REVEAL_VAR"}, {"$set": {"switch": True}}, upsert=True
         )
