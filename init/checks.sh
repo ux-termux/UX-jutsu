@@ -12,10 +12,6 @@
 #    log "Checking Bash Commands ..."
 #    command -v jq &> /dev/null || quit "Required command : jq : could not be found !"
 #}
-_installReq() {
-    pip install -U pyrogram
-    echo 'Requirements are installed...'
-}
 _checkConfigFile() {
     log "Checking Config File ..."
     configPath="config.env"
@@ -159,7 +155,6 @@ _flushMessages() {
 
 assertPrerequisites() {
 #    _checkBashReq
-    _installReq
     _checkConfigFile
     _checkRequiredVars
 }
