@@ -203,11 +203,13 @@ async def kang_(message: Message):
                     packname = f"a{user.id}_by_userge_{pack}"
                     packnick = f"{custom_packnick} Vol.{pack}"
                     if is_anim:
-                        packname += "_anim"
-                        packnick += " (Animated)"
+                        pack += 1
+                        packname += f"_anim{pack}"
+                        packnick += f" (Animated){pack}"
                     if is_video:
-                        packname += "_video"
-                        packnick += " (Video)"
+                        pack += 1
+                        packname += f"_video{pack}"
+                        packnick += f" (Video){pack}"
                     await kang_msg.edit(
                         "`Switching to Pack "
                         + str(pack)
