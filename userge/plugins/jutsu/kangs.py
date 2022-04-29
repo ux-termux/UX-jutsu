@@ -227,7 +227,7 @@ async def kang_(message: Message):
                         await conv.send_message(emoji_)
                         await conv.get_response(mark_read=True)
                         await conv.send_message("/publish")
-                        if is_anim or is_video:
+                        if is_anim:
                             await conv.get_response(mark_read=True)
                             await conv.send_message(f"<{packnick}>", parse_mode=None)
                         await conv.get_response(mark_read=True)
@@ -281,7 +281,7 @@ async def kang_(message: Message):
                 await conv.send_message(emoji_)
                 await conv.get_response(mark_read=True)
                 await conv.send_message("/publish")
-                if is_anim or is_video:
+                if is_anim:
                     await conv.get_response(mark_read=True)
                     await conv.send_message(f"<{packnick}>", parse_mode=None)
                 await conv.get_response(mark_read=True)
