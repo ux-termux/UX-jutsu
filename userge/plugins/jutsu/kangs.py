@@ -219,7 +219,7 @@ async def kang_(message: Message):
                     )
                     await conv.send_message(packname)
                     msg = await conv.get_response(mark_read=True)
-                    if msg.text == "Invalid set selected." or "Whoa! That's probably enough stickers for one set, give it a break. A set can't have more than 50 video stickers at the moment.":
+                    if msg.text == "Invalid set selected.":
                         await conv.send_message(cmd)
                         await conv.get_response(mark_read=True)
                         await conv.send_message(packnick)
