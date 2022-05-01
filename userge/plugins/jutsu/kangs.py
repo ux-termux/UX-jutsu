@@ -196,9 +196,10 @@ async def kang_(message: Message):
                     return
                 await conv.get_response(mark_read=True)
                 await conv.send_message(packname)
+                msg = await conv.get_response(mark_read=True)
                 if is_video : await conv.send_message(packname)
                 msg = await conv.get_response(mark_read=True)
-                limit = "50" if (is_anim or is_video) else "120"
+                limit = "50" if is_video else "120"
                 while limit in msg.text:
                     pack += 1
                     packname = f"a{user.id}_by_userge_{pack}"
