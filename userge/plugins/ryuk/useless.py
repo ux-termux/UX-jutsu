@@ -32,4 +32,4 @@ async def clck(message: Message):
     press = message.replied
     await press.click(0)
   x = message.replied
-  await x.click(num)
+  await x.click(button)
