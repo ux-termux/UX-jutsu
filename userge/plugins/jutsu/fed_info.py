@@ -130,7 +130,7 @@ async def fedinfo(message: Message):
       await message.err("Unblock @MissRose_bot first...")
       return
   try:
-      response = await gr(query_, timeout=4, mark_read=True)
+      response = await gr(query_, timeout=2, mark_read=True)
   except Exception as e:
       await message.err(e)
       return
