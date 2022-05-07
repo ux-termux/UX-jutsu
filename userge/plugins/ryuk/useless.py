@@ -24,7 +24,7 @@ async def jc(message: Message):
 
 @userge.on_cmd(
   "click",
-  about={"header" : "click buttons","usage" : "input which button you want to press'\n defaults to 1st button"},
+  about={"header" : "click buttons","header" : "Input which button you want to press\ndefaults to 1st button", "usage" : "{tr}click yes"},
 )
 async def clck(message: Message):
   button = message.input_str
