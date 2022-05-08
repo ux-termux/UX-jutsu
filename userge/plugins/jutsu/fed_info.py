@@ -140,3 +140,27 @@ async def fedinfo(message: Message):
       await message.edit(f"<b>ERROR:</b> Fed `{fed_id}` doesn't exist.")
   else:
       await message.edit(resp.html, parse_mode="html")
+
+@userge.on_cmd(
+  "myfeds",
+  about={
+    "header" : "list feds you are admin in",
+    "usage" : "{tr}myfeds",
+  },
+)
+async def myfeds(message: Message):
+  bot_ = "@missrose_bot"
+  try:
+      query_ = await userge.send_message(bot_, f"!myfeds")
+  except YouBlockedUser:
+      await message.err("Unblock @MissRose_bot first...")
+      return
+  try:
+      response = await gr(query_, timeout=2, mark_read=True)
+  except Exception as e:
+      await message.err(e)
+      return
+  resp = response.text
+  await message.edit(resp.html, parse_mode="html")
+
+  
