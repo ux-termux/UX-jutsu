@@ -126,7 +126,6 @@ async def ytDown(message: Message):
             userge.loop.create_task(message.edit(out))
 
     await message.edit("Hold on \u23f3 ..")
-    replied = message.replied
     if bool(message.flags):
         desiredFormat1 = str(message.flags.get("a", ""))
         desiredFormat2 = str(message.flags.get("v", ""))
@@ -136,25 +135,25 @@ async def ytDown(message: Message):
             # 1st format must contain the video
             desiredFormat = "+".join([desiredFormat2, desiredFormat1])
             retcode = await _tubeDl(
-                [message.filtered_input_str or message.filtered_replied_str], __progress, startTime, desiredFormat
+                [message.filtered_input_str or message.replied], __progress, startTime, desiredFormat
             )
         elif "a" in message.flags:
             desiredFormat = desiredFormat1
             retcode = await _tubeDl(
-                [message.filtered_input_str or message.filtered_replied_str], __progress, startTime, desiredFormat
+                [message.filtered_input_str or message.replied], __progress, startTime, desiredFormat
             )
         elif "v" in message.flags:
             desiredFormat = desiredFormat2 + "+bestaudio"
             retcode = await _tubeDl(
-                [message.filtered_input_str or message.filtered_replied_str], __progress, startTime, desiredFormat
+                [message.filtered_input_str or message.replied], __progress, startTime, desiredFormat
             )
         else:
             retcode = await _tubeDl(
-                [message.filtered_input_str or message.filtered_replied_str], __progress, startTime, None
+                [message.filtered_input_str or message.replied], __progress, startTime, None
             )
     else:
         retcode = await _tubeDl(
-            [message.filtered_input_str or message.filtered_replied_str], __progress, startTime, None
+            [message.filtered_input_str or message.replied], __progress, startTime, None
         )
     if retcode == 0:
         _fpath = ""
