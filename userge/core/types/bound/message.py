@@ -101,6 +101,12 @@ class Message(RawMessage):
         """ Returns the filtered input string without command and flags """
         self._filter()
         return self._filtered_input_str
+    
+    @property
+    def filtered_reply_str(self) -> str:
+        """ Returns the filtered input string without command and flags """
+        self._filter()
+        return self._filtered_reply_str
 
     @property
     def flags(self) -> Dict[str, str]:
