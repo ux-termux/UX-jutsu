@@ -114,11 +114,6 @@ class Message(RawMessage):
         _replied = self.reply_to_message
         return _replied
     
-    @property
-    def filtered_replied_str(self) -> str:
-        """ Returns the filtered input reply without command and flags """
-        self._filter()
-        return self._filtered_replied_str
 
     @property
     def process_is_canceled(self) -> bool:
