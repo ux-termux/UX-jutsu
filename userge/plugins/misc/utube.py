@@ -126,6 +126,7 @@ async def ytDown(message: Message):
             userge.loop.create_task(message.edit(out))
 
     await message.edit("Hold on \u23f3 ..")
+    replied = message.replied
     if bool(message.flags):
         desiredFormat1 = str(message.flags.get("a", ""))
         desiredFormat2 = str(message.flags.get("v", ""))
