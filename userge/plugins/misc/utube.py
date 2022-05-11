@@ -130,30 +130,30 @@ async def ytDown(message: Message):
         desiredFormat1 = str(message.flags.get("a", ""))
         desiredFormat2 = str(message.flags.get("v", ""))
         if "m" in message.flags:
-            retcode = await _mp3Dl([message.filtered_input_str], __progress, startTime)
+            retcode = await _mp3Dl([message.filtered_input_str or message.filtered_replied_str], __progress, startTime)
         elif all(k in message.flags for k in ("a", "v")):
             # 1st format must contain the video
             desiredFormat = "+".join([desiredFormat2, desiredFormat1])
             retcode = await _tubeDl(
-                [message.filtered_input_str], __progress, startTime, desiredFormat
+                [message.filtered_input_str or message.filtered_replied_str], __progress, startTime, desiredFormat
             )
         elif "a" in message.flags:
             desiredFormat = desiredFormat1
             retcode = await _tubeDl(
-                [message.filtered_input_str], __progress, startTime, desiredFormat
+                [message.filtered_input_str or message.filtered_replied_str], __progress, startTime, desiredFormat
             )
         elif "v" in message.flags:
             desiredFormat = desiredFormat2 + "+bestaudio"
             retcode = await _tubeDl(
-                [message.filtered_input_str], __progress, startTime, desiredFormat
+                [message.filtered_input_str or message.filtered_replied_str], __progress, startTime, desiredFormat
             )
         else:
             retcode = await _tubeDl(
-                [message.filtered_input_str], __progress, startTime, None
+                [message.filtered_input_str or message.filtered_replied_str], __progress, startTime, None
             )
     else:
         retcode = await _tubeDl(
-            [message.filtered_input_str], __progress, startTime, None
+            [message.filtered_input_str or message.filtered_replied_str], __progress, startTime, None
         )
     if retcode == 0:
         _fpath = ""
