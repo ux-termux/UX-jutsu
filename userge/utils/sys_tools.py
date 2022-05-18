@@ -15,6 +15,8 @@ from signal import SIGTERM
 from typing import Dict, List, Union
 from userge import Config
 
+from userge import Config
+
 _SECURE = [
     # critical
     "API_ID",
@@ -75,6 +77,6 @@ def secure_text(text: str) -> str:
         return ""
     for var in _SECURE:
         tvar = environ.get(var, None)
-        if tvar and tvar in text and Config.REVEAL_VAR == True:
+        if tvar and tvar in text and Config.REVEAL_VAR == False:
             text = text.replace(tvar, "[SECURED!]")
     return text
