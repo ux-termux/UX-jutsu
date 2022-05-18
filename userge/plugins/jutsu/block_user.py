@@ -95,6 +95,7 @@ async def block_ing(message: Message):
     await message.edit(
         f"User <b>@{user_.username}</b> is blocked with {action}reason <b>{reason_}</b>."
     )
+    await CHANNEL.log(f"User <b>@{user_.username}</b> is blocked with {action}reason <b>{reason_}</b>.")
 
 
 @userge.on_cmd(
@@ -146,6 +147,7 @@ async def unblock_ing(message: Message):
     Config.BLOCKED_USERS.remove(user_.id)
     await userge.unblock_user(user_.id)
     await message.edit(f"User <b>@{user_.username}</b> is unblocked now.")
+    await CHANNEL.log(f"User <b>@{user_.username}</b> is unblocked now.")
 
 
 # i'm noob with raw updates, any suggestion to improve the code is welcome
