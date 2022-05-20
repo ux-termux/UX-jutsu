@@ -22,12 +22,12 @@ from userge import Config, Message, userge
 async def see_repo(message: Message):
     """see repo"""
     repo_ = (
-        "[GPACK](https://github.com/ashwinstr/MyGpack)"
+        "[GPACK](https://heroku.com/deploy?template=https://github.com/anonymous-x97/pack)"
         if "-g" in message.flags
         else f"[UX-JUTSU]({Config.UPSTREAM_REPO})"
     )
     output = f"• **repo** : {repo_}"
-    if "-d" in message.flags:
+    if "-p" not in message.flags:
         await message.edit(output, disable_web_page_preview=True)
     else:
         await message.edit(output)
