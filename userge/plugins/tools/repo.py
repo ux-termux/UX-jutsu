@@ -22,7 +22,7 @@ from userge import Config, Message, userge
 async def see_repo(message: Message):
     """see repo"""
     repo_ = (
-        "[GPACK](https://heroku.com/deploy?template=https://github.com/anonymous-x97/pack)"
+        "[GPACK](https://github.com/anonymous-x97/pack)"
         if "-g" in message.flags
         else f"[UX-JUTSU]({Config.UPSTREAM_REPO})"
     )
