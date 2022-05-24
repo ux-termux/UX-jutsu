@@ -11,6 +11,7 @@ import shutil
 from pathlib import Path
 
 from hachoir.stream.input import InputStreamError, NullStreamError
+
 from userge import Message, userge
 from userge.plugins.misc.uploads import upload
 from userge.utils import progress, runcmd, safe_filename

@@ -5,6 +5,7 @@
 import re
 
 import requests
+
 from userge import Message, pool, userge
 
 
@@ -18,7 +19,7 @@ from userge import Message, pool, userge
     del_pre=True,
 )
 async def zippyshare(message: Message):
-    """ zippy to direct """
+    """zippy to direct"""
     url = message.input_str
     await message.edit("`Generating url ....`")
     try:
@@ -61,6 +62,6 @@ def _generate_zippylink(url):
             raise ValueError("Invalid Response!")
         val, name = int(match.group(1)), match.group(2)
         d_l = "https://www{}.zippyshare.com/d/{}/{}/{}".format(
-            server, id_, val ** 3 + 3, name
+            server, id_, val**3 + 3, name
         )
     return d_l, name

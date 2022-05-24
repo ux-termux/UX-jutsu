@@ -9,6 +9,7 @@ import random
 import numpy as np
 from colour import Color
 from PIL import Image, ImageDraw, ImageFont, ImageOps
+
 from userge import Config, Message, userge
 from userge.utils import media_to_image
 
@@ -33,7 +34,7 @@ async def ascii_(message: Message):
         await message.reply_sticker("CAADAQADhgADwKwII4f61VT65CNGFgQ")
         return
     ascii_type = "alt" if "-alt" in message.flags else ""
-    doc_ = True if "-d" in message.flags else False
+    True if "-d" in message.flags else False
     dls_loc = await media_to_image(message)
     if not dls_loc:
         return

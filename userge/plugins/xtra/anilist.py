@@ -15,9 +15,15 @@ import humanize
 import tracemoepy
 from aiohttp import ClientSession
 from pyrogram import filters
-from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
+from pyrogram.types import (
+    CallbackQuery,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    InputMediaPhoto,
+)
+
 from userge import Message, userge
-from userge.utils import media_to_image, check_owner
+from userge.utils import check_owner, media_to_image
 from userge.utils import post_to_telegraph as post_to_tp
 
 # Logging Errors
@@ -199,8 +205,9 @@ query ($search: String, $type: MediaType) {
 }
 """
 
+
 async def return_json_senpai(query, vars_):
-    """ Makes a Post to https://graphql.anilist.co. """
+    """Makes a Post to https://graphql.anilist.co."""
     url_ = "https://graphql.anilist.co"
     async with ClientSession() as session:
         async with session.post(
@@ -211,7 +218,7 @@ async def return_json_senpai(query, vars_):
 
 
 def make_it_rw(time_stamp, as_countdown=False):
-    """ Converting Time Stamp to Readable Format """
+    """Converting Time Stamp to Readable Format"""
     if as_countdown:
         now = datetime.now()
         air_time = datetime.fromtimestamp(time_stamp)
@@ -234,7 +241,7 @@ def make_it_rw(time_stamp, as_countdown=False):
     },
 )
 async def anim_arch(message: Message):
-    """ Search Anime Info """
+    """Search Anime Info"""
     query = message.filtered_input_str
     if not query:
         await message.err("NameError: 'query' not defined")
@@ -245,36 +252,53 @@ async def anim_arch(message: Message):
         if "-mid" in message.flags:
             vars_ = {"idMal": int(query), "asHtml": True, "type": "ANIME"}
     result = await get_ani(vars_)
-    if len(result)!=1:
+    if len(result) != 1:
         title_img, finals_ = result[0], result[1]
     else:
         return await message.err(result[0])
     buttons = []
-    if result[2]=="None":
-        if result[3]!="None":
-            buttons.append([InlineKeyboardButton(text="Sequel", callback_data=f"btn_{result[3]}")])
+    if result[2] == "None":
+        if result[3] != "None":
+            buttons.append(
+                [InlineKeyboardButton(text="Sequel", callback_data=f"btn_{result[3]}")]
+            )
         else:
-            if result[4]!=False:
+            if result[4]:
                 await message.reply_photo(title_img, caption=finals_)
                 await message.delete()
                 return
     else:
-        if result[3]!="None":
+        if result[3] != "None":
             buttons.append(
                 [
-                    InlineKeyboardButton(text="Prequel", callback_data=f"btn_{result[2]}"),
-                    InlineKeyboardButton(text="Sequel", callback_data=f"btn_{result[3]}")
+                    InlineKeyboardButton(
+                        text="Prequel", callback_data=f"btn_{result[2]}"
+                    ),
+                    InlineKeyboardButton(
+                        text="Sequel", callback_data=f"btn_{result[3]}"
+                    ),
                 ]
             )
         else:
-            buttons.append([InlineKeyboardButton(text="Prequel", callback_data=f"btn_{result[2]}")])
-    if result[4]==False:
-        buttons.append([InlineKeyboardButton(text="Download", switch_inline_query_current_chat=f"anime {result[5]}")])
+            buttons.append(
+                [InlineKeyboardButton(text="Prequel", callback_data=f"btn_{result[2]}")]
+            )
+    if not result[4]:
+        buttons.append(
+            [
+                InlineKeyboardButton(
+                    text="Download",
+                    switch_inline_query_current_chat=f"anime {result[5]}",
+                )
+            ]
+        )
     if "-wp" in message.flags:
         finals_ = f"[\u200b]({title_img}) {finals_}"
         await message.edit(finals_)
         return
-    await message.reply_photo(title_img, caption=finals_, reply_markup=InlineKeyboardMarkup(buttons))
+    await message.reply_photo(
+        title_img, caption=finals_, reply_markup=InlineKeyboardMarkup(buttons)
+    )
     await message.delete()
 
 
@@ -288,7 +312,7 @@ async def anim_arch(message: Message):
     },
 )
 async def manga_arch(message: Message):
-    """ Search Manga Info """
+    """Search Manga Info"""
     query = message.input_str
     if not query:
         await message.err("NameError: 'query' not defined")
@@ -314,7 +338,7 @@ async def manga_arch(message: Message):
     synopsis = data.get("description")
     description = synopsis[:500]
     if len(synopsis) > 500:
-      description += "..."
+        description += "..."
     volumes = data.get("volumes")
     chapters = data.get("chapters")
     score = data.get("averageScore")
@@ -327,7 +351,7 @@ async def manga_arch(message: Message):
     name = f"""[{c_flag}]**{romaji}**
         __{english}__
         {native}"""
-    if english==None:
+    if english is None:
         name = f"""[{c_flag}]**{romaji}**
         {native}"""
     finals_ = f"{name}\n\n"
@@ -355,7 +379,7 @@ async def manga_arch(message: Message):
     },
 )
 async def airing_anim(message: Message):
-    """ Get Airing Detail of Anime """
+    """Get Airing Detail of Anime"""
     query = message.input_str
     if not query:
         await message.err("NameError: 'query' not defined")
@@ -418,7 +442,7 @@ async def airing_anim(message: Message):
     },
 )
 async def get_schuled(message: Message):
-    """ Get List of Scheduled Anime """
+    """Get List of Scheduled Anime"""
     var = {"notYetAired": True}
     await message.edit("`Fetching Scheduled Animes`")
     result = await return_json_senpai(AIRING_QUERY, var)
@@ -463,7 +487,7 @@ async def get_schuled(message: Message):
     },
 )
 async def character_search(message: Message):
-    """ Get Info about a Character """
+    """Get Info about a Character"""
     query = message.input_str
     if not query:
         await message.err("NameError: 'query' not defined")
@@ -493,16 +517,16 @@ async def character_search(message: Message):
     for ani in featured:
         k = ani["title"]["english"] or ani["title"]["romaji"]
         kk = ani["type"]
-        if kk=="MANGA":
+        if kk == "MANGA":
             sninml += f"    • {k}\n"
     for ani in featured:
         kkk = ani["title"]["english"] or ani["title"]["romaji"]
         kkkk = ani["type"]
-        if kkkk=="ANIME":
+        if kkkk == "ANIME":
             sninal += f"    • {kkk}\n"
     sninal += "\n"
-    sninm = "  `MANGAS`\n" if len(sninml)!=0 else ""
-    snina = "  `ANIMES`\n" if len(sninal)!=0 else ""
+    sninm = "  `MANGAS`\n" if len(sninml) != 0 else ""
+    snina = "  `ANIMES`\n" if len(sninal) != 0 else ""
     snin = f"\n{snina}{sninal}{sninm}{sninml}"
     sp = 0
     cntnt = ""
@@ -559,7 +583,7 @@ async def character_search(message: Message):
     },
 )
 async def trace_bek(message: Message):
-    """ Reverse Search Anime Clips/Photos """
+    """Reverse Search Anime Clips/Photos"""
     dls_loc = await media_to_image(message)
     if dls_loc:
         async with ClientSession() as session:
@@ -606,54 +630,62 @@ async def get_ani(vars_):
     country = data.get("countryOfOrigin")
     c_flag = cflag.flag(country)
     source = data.get("source")
-    prqlsql = data.get("relations").get('edges')
+    prqlsql = data.get("relations").get("edges")
     bannerImg = data.get("bannerImage")
     s_date = data.get("startDate")
     adult = data.get("isAdult")
     trailer_link = "N/A"
     if data["title"]["english"] is not None:
-        name = f'''[{c_flag}]**{romaji}**
+        name = f"""[{c_flag}]**{romaji}**
         __{english}__
-        {native}'''
+        {native}"""
     else:
-        name = f'''[{c_flag}]**{romaji}**
-        {native}'''
+        name = f"""[{c_flag}]**{romaji}**
+        {native}"""
     prql, prql_id, sql, sql_id = "", "None", "", "None"
     for i in prqlsql:
-        if i['relationType']=="PREQUEL":
-            pname = i["node"]["title"]["english"] if i["node"]["title"]["english"] is not None else i["node"]["title"]["romaji"]
+        if i["relationType"] == "PREQUEL":
+            pname = (
+                i["node"]["title"]["english"]
+                if i["node"]["title"]["english"] is not None
+                else i["node"]["title"]["romaji"]
+            )
             prql += f"**PREQUEL:** `{pname}`\n"
             prql_id = f"{i['node']['id']}"
             break
     for i in prqlsql:
-        if i['relationType']=="SEQUEL":
-            sname = i["node"]["title"]["english"] if i["node"]["title"]["english"] is not None else i["node"]["title"]["romaji"]
+        if i["relationType"] == "SEQUEL":
+            sname = (
+                i["node"]["title"]["english"]
+                if i["node"]["title"]["english"] is not None
+                else i["node"]["title"]["romaji"]
+            )
             sql += f"**SEQUEL:** `{sname}`\n"
             sql_id = f"{i['node']['id']}"
             break
     additional = f"{prql}{sql}"
-    dura = f"\n➤ **DURATION:** `{duration} min/ep`" if duration!=None else ""
+    dura = f"\n➤ **DURATION:** `{duration} min/ep`" if duration is not None else ""
     charlist = []
     for char in data["characters"]["nodes"]:
         charlist.append(f"    •{char['name']['full']}")
     chrctrs = "\n"
     chrctrs += ("\n").join(charlist[:10])
-    chrctrsls = f"\n➤ **CHARACTERS:** `{chrctrs}`" if len(charlist)!=0 else ""
+    chrctrsls = f"\n➤ **CHARACTERS:** `{chrctrs}`" if len(charlist) != 0 else ""
     air_on = None
     if data["nextAiringEpisode"]:
         nextAir = data["nextAiringEpisode"]["airingAt"]
         air_on = make_it_rw(nextAir)
-        eps = data['nextAiringEpisode']['episode']
-        ep_ = list(str(data['nextAiringEpisode']['episode']))
+        eps = data["nextAiringEpisode"]["episode"]
+        ep_ = list(str(data["nextAiringEpisode"]["episode"]))
         x = ep_.pop()
         th = "th"
-        if len(ep_)>=1:
-            if ep_.pop()!="1":
+        if len(ep_) >= 1:
+            if ep_.pop() != "1":
                 th = pos_no(x)
         else:
             th = pos_no(x)
         air_on += f" | {eps}{th} eps"
-    if air_on==None:
+    if air_on is None:
         status_air = f"➤ <b>STATUS:</b> `{status}`"
     else:
         status_air = f"➤ <b>STATUS:</b> `{status}`\n➤ <b>NEXT AIRING:</b> `{air_on}`"
@@ -673,7 +705,10 @@ async def get_ani(vars_):
             f"<p>About Character and Role:</p>{character.get('description', 'N/A')}"
         )
         html_char += f"{html_}<br><br>"
-    studios = "".join("<a href='{}'>• {}</a> ".format(studio["siteUrl"], studio["name"]) for studio in data["studios"]["nodes"])
+    studios = "".join(
+        "<a href='{}'>• {}</a> ".format(studio["siteUrl"], studio["name"])
+        for studio in data["studios"]["nodes"]
+    )
     url = data.get("siteUrl")
     title_img = f"https://img.anili.st/media/{idm}"
     # Telegraph Post mejik
@@ -704,7 +739,7 @@ async def get_ani(vars_):
 
 
 def pos_no(x):
-    th = "st" if x=="1" else "nd" if x=="2" else "rd" if x=="3" else "th"
+    th = "st" if x == "1" else "nd" if x == "2" else "rd" if x == "3" else "th"
     return th
 
 
@@ -716,19 +751,36 @@ async def present_res(cq: CallbackQuery):
     result = await get_ani(vars_)
     pic, msg = result[0], result[1]
     btns = []
-    if result[2]=="None":
-        if result[3]!="None":
-            btns.append([InlineKeyboardButton(text="Sequel", callback_data=f"btn_{result[3]}")])
+    if result[2] == "None":
+        if result[3] != "None":
+            btns.append(
+                [InlineKeyboardButton(text="Sequel", callback_data=f"btn_{result[3]}")]
+            )
     else:
-        if result[3]!="None":
+        if result[3] != "None":
             btns.append(
                 [
-                    InlineKeyboardButton(text="Prequel", callback_data=f"btn_{result[2]}"),
-                    InlineKeyboardButton(text="Sequel", callback_data=f"btn_{result[3]}")
+                    InlineKeyboardButton(
+                        text="Prequel", callback_data=f"btn_{result[2]}"
+                    ),
+                    InlineKeyboardButton(
+                        text="Sequel", callback_data=f"btn_{result[3]}"
+                    ),
                 ]
             )
         else:
-            btns.append([InlineKeyboardButton(text="Prequel", callback_data=f"btn_{result[2]}")])
-    if result[4]==False:
-        btns.append([InlineKeyboardButton(text="Download", switch_inline_query_current_chat=f"anime {result[5]}")])
-    await cq.edit_message_media(InputMediaPhoto(pic, caption=msg), reply_markup=InlineKeyboardMarkup(btns))
+            btns.append(
+                [InlineKeyboardButton(text="Prequel", callback_data=f"btn_{result[2]}")]
+            )
+    if not result[4]:
+        btns.append(
+            [
+                InlineKeyboardButton(
+                    text="Download",
+                    switch_inline_query_current_chat=f"anime {result[5]}",
+                )
+            ]
+        )
+    await cq.edit_message_media(
+        InputMediaPhoto(pic, caption=msg), reply_markup=InlineKeyboardMarkup(btns)
+    )

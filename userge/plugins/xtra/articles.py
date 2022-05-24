@@ -2,6 +2,7 @@ import re
 from asyncio import sleep
 
 from newspaper import Article, ArticleException
+
 from userge import Message, userge
 
 regex: str = (
@@ -16,7 +17,7 @@ max_chars = 3900
     about={"header": "Scrap article content", "usage": "{tr}con [link | reply to msg]"},
 )
 async def con_(message: Message):
-    """ Articles Scraper """
+    """Articles Scraper"""
     text = message.input_str
     if message.reply_to_message:
         text = message.reply_to_message.text

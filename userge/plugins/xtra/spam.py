@@ -2,7 +2,6 @@ import asyncio
 import os
 
 from userge import Config, Message, userge
-
 from userge.plugins.forbidden_jutsu.stop import forbidden_sudo
 
 S_LOG = userge.getCLogger(__name__)

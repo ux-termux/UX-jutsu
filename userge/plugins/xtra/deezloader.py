@@ -5,6 +5,7 @@ from pathlib import Path
 
 import deezloader  # pylint: disable=W0406
 from deezloader.exceptions import NoDataApi
+
 from userge import Message, pool, userge
 from userge.plugins.misc.uploads import audio_upload, doc_upload
 
@@ -87,7 +88,9 @@ async def deezload(message: Message):
                 artist, song = input_.split("-")
                 quality = d_quality
             else:
-                await message.edit("Give [{artist name} - {song name}-{quality(optional)}]...")
+                await message.edit(
+                    "Give [{artist name} - {song name}-{quality(optional)}]..."
+                )
                 return
         artist = artist.strip()
         artist_n = artist.split()

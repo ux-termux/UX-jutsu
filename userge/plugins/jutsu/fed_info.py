@@ -112,55 +112,54 @@ async def fban_stat(message: Message):
 
 
 @userge.on_cmd(
-  "fedinfo",
-  about={
-    "header" : "Check information about a fed",
-    "usage" : "{tr}fedinfo fed id",
+    "fedinfo",
+    about={
+        "header": "Check information about a fed",
+        "usage": "{tr}fedinfo fed id",
     },
 )
 async def fedinfo(message: Message):
-  fed_id = message.input_str
-  if not fed_id:
-    await message.err("enter a fed id to check...")
-    return
-  bot_ = "@missrose_bot"
-  try:
-      query_ = await userge.send_message(bot_, f"!fedinfo {fed_id}")
-  except YouBlockedUser:
-      await message.err("Unblock @MissRose_bot first...")
-      return
-  try:
-      response = await gr(query_, timeout=2, mark_read=True)
-  except Exception as e:
-      await message.err(e)
-      return
-  fail = "This isn't a valid FedID!"
-  resp = response.text
-  if fail in resp:
-      await message.edit(f"<b>ERROR:</b> Fed `{fed_id}` doesn't exist.")
-  else:
-      await message.edit(resp.html, parse_mode="html")
+    fed_id = message.input_str
+    if not fed_id:
+        await message.err("enter a fed id to check...")
+        return
+    bot_ = "@missrose_bot"
+    try:
+        query_ = await userge.send_message(bot_, f"!fedinfo {fed_id}")
+    except YouBlockedUser:
+        await message.err("Unblock @MissRose_bot first...")
+        return
+    try:
+        response = await gr(query_, timeout=2, mark_read=True)
+    except Exception as e:
+        await message.err(e)
+        return
+    fail = "This isn't a valid FedID!"
+    resp = response.text
+    if fail in resp:
+        await message.edit(f"<b>ERROR:</b> Fed `{fed_id}` doesn't exist.")
+    else:
+        await message.edit(resp.html, parse_mode="html")
+
 
 @userge.on_cmd(
-  "myfeds",
-  about={
-    "header" : "list feds you are admin in",
-    "usage" : "{tr}myfeds",
-  },
+    "myfeds",
+    about={
+        "header": "list feds you are admin in",
+        "usage": "{tr}myfeds",
+    },
 )
 async def myfeds(message: Message):
-  bot_ = "@missrose_bot"
-  try:
-      query_ = await userge.send_message(bot_, f"!myfeds")
-  except YouBlockedUser:
-      await message.err("Unblock @MissRose_bot first...")
-      return
-  try:
-      response = await gr(query_, timeout=2, mark_read=True)
-  except Exception as e:
-      await message.err(e)
-      return
-  resp = response.text
-  await message.edit(resp.html, parse_mode="html")
-
-  
+    bot_ = "@missrose_bot"
+    try:
+        query_ = await userge.send_message(bot_, f"!myfeds")
+    except YouBlockedUser:
+        await message.err("Unblock @MissRose_bot first...")
+        return
+    try:
+        response = await gr(query_, timeout=2, mark_read=True)
+    except Exception as e:
+        await message.err(e)
+        return
+    resp = response.text
+    await message.edit(resp.html, parse_mode="html")

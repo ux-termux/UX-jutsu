@@ -3,6 +3,7 @@
 # By @Krishna_Singhal
 
 from pyrogram.errors.exceptions.bad_request_400 import YouBlockedUser
+
 from userge import Message, userge
 from userge.utils.exceptions import StopConversation
 
@@ -16,7 +17,7 @@ from userge.utils.exceptions import StopConversation
     },
 )
 async def sangmata_(message: Message):
-    """ Get User's Updated previous Names and Usernames """
+    """Get User's Updated previous Names and Usernames"""
     replied = message.reply_to_message
     if not replied:
         await message.err("```Reply to get Name and Username History...```", del_in=5)

@@ -4,8 +4,9 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from googlesearch import search
+
 from userge import Message, userge
-from userge.utils import post_to_telegraph 
+from userge.utils import post_to_telegraph
 
 
 @userge.on_cmd(

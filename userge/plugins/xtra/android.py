@@ -8,6 +8,7 @@
 
 from bs4 import BeautifulSoup
 from requests import get
+
 from userge import Message, userge
 
 
@@ -17,7 +18,7 @@ from userge import Message, userge
     allow_via_bot=True,
 )
 async def device_recovery(message: Message):
-    """ Get Latest TWRP """
+    """Get Latest TWRP"""
     message.reply_to_message
     args = message.filtered_input_str
     if args:
