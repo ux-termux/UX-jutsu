@@ -53,7 +53,7 @@ __{uploader}__
         _exracted
     )
     if _exracted["thumb"]:
-        _tmp = wget.download(
+        _tmp = await pool.run_in_thread(wget.download)(
             _exracted["thumb"], os.path.join(Config.DOWN_PATH, f"{time()}.jpg")
         )
         await message.reply_photo(_tmp, caption=out)
@@ -66,18 +66,18 @@ __{uploader}__
 @userge.on_cmd(
     "ytdl",
     about={
-        "header": "Download from youtube",
+        "header": "Download from youtube and upload to Telegram.",
         "options": {
             "-a": "select the audio u-id",
             "-v": "select the video u-id",
             "-m": "extract the mp3 in 320kbps",
-            "-t": "upload to telegram",
+            "-s": "Download to Bot",
         },
         "examples": [
             "{tr}ytdl link",
             "{tr}ytdl -a12 -v120 link",
-            "{tr}ytdl -m -t link will upload the mp3",
-            "{tr}ytdl -m -t -d link will upload ",
+            "{tr}ytdl -m -s link will upload the mp3",
+            "{tr}ytdl -m -s -d link will upload ",
             "the mp3 as a document",
         ],
     },
@@ -166,10 +166,10 @@ async def ytDown(message: Message):
         await message.edit(
             f"**YTDL completed in {round(time() - startTime)} seconds**\n`{_fpath}`"
         )
-        if "t" in message.flags:
-            await upload(message, Path(_fpath))
+        if "s" in message.flags:
+            await message.edit(str(retcode))
     else:
-        await message.edit(str(retcode))
+        await upload(message, Path(_fpath))
 
 
 @userge.on_cmd(
@@ -243,7 +243,7 @@ def _supported(url):
 
 
 @pool.run_in_thread
-def _tubeDl(url: list, starttime, prog, uid=None):
+def _tubeDl(url: list, prog, starttime, uid=None):
     _opts = {
         "outtmpl": os.path.join(
             Config.DOWN_PATH, str(starttime), "%(title)s-%(format)s.%(ext)s"
