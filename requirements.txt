@@ -12,7 +12,7 @@ google-auth-httplib2
 google-auth-oauthlib
 googletrans
 gtts
-futures
+futures==2.2.0
 hachoir
 heroku3
 html-telegraph-poster
