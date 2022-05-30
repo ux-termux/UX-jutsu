@@ -46,7 +46,7 @@ urbandict
 vcsi
 wget
 wikipedia
-git+https://github.com/ytdl-org/youtube-dl
+#git+https://github.com/ytdl-org/youtube-dl
 git+https://github.com/Nekos-life/Async-nekos.life-wrapper
 ruamel.yaml
 ujson
