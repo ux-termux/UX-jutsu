@@ -11,7 +11,7 @@ from re import compile as comp_regex
 from time import time
 
 import ujson
-import youtube_dl
+import yt_dlp as youtube_dl
 from pyrogram import filters
 from pyrogram.types import (
     CallbackQuery,
