@@ -5,7 +5,7 @@ beautifulsoup4
 colour
 cowpy
 dnspython
-futures
+futures==2.2.0
 gitpython
 google-api-python-client
 google-auth-httplib2
