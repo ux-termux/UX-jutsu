@@ -43,6 +43,10 @@ RUN apt -qq update && apt -qq install -y --no-install-recommends \
     libfreetype6-dev libjpeg-dev libpng-dev libgif-dev libwebp-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp/*
 
+RUN python -m pip install --upgrade pip
+
+RUN python -m pip install --upgrade setuptools
+
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
