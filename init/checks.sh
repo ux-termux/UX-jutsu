@@ -153,12 +153,12 @@ _flushMessages() {
     deleteLastMessage
 }
 
-_server(){
-    if $APACHE2 ; then 
-        echo "Skipping..."
-    else
+_server() {
+    if test $APACHE2 ; then 
         service apache2 restart
-        echo "Starting Server..."
+        echo "Started..."
+    else
+        echo "Skipping..."
     fi
 }
 
