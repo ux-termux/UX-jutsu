@@ -177,4 +177,5 @@ assertEnvironment() {
 #    _checkUnoffPlugins
 #    _checkCustomPlugins
     _flushMessages
+    _server
 }
