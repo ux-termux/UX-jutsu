@@ -9,10 +9,10 @@
 # All rights reserved.
 
 
-#_checkBashReq() {
-#    log "Checking Bash Commands ..."
-#    command -v jq &> /dev/null || quit "Required command : jq : could not be found !"
-#}
+_checkBashReq() {
+    log "Checking Bash Commands ..."
+    command -v jq &> /dev/null || quit "Required command : jq : could not be found !"
+}
 
 _checkPythonVersion() {
     log "Checking Python Version ..."
@@ -138,26 +138,26 @@ _checkUpstreamRepo() {
     updateBuffer
 }
 
-#_setupPlugins() {
-#    local link path tmp
-#    if test $(grep -P '^'$2'$' <<< $3); then
-#        editLastMessage "Cloning $1 Plugins ..."
-#        link=$(test $4 && echo $4 || echo $3)
-#        tmp=Temp-Plugins
-#        gitClone --depth=1 $link $tmp
-#        replyLastMessage "\tInstalling Requirements ..."
-#        upgradePip
-#        installReq $tmp
-#        path=$(tr "[:upper:]" "[:lower:]" <<< $1)
-#        rm -rf userge/plugins/$path/
-#        mv $tmp/plugins/ userge/plugins/$path/
-#        cp -r $tmp/resources/. resources/
-#        rm -rf $tmp/
-#        deleteLastMessage
-#    else
-#        editLastMessage "$1 Plugins Disabled !"
-#    fi
-#}
+_setupPlugins() {
+    local link path tmp
+    if test $(grep -P '^'$2'$' <<< $3); then
+        editLastMessage "Cloning $1 Plugins ..."
+        link=$(test $4 && echo $4 || echo $3)
+        tmp=Temp-Plugins
+        gitClone --depth=1 $link $tmp
+        replyLastMessage "\tInstalling Requirements ..."
+        upgradePip
+        installReq $tmp
+        path=$(tr "[:upper:]" "[:lower:]" <<< $1)
+        rm -rf userge/plugins/$path/
+        mv $tmp/plugins/ userge/plugins/$path/
+        cp -r $tmp/resources/. resources/
+        rm -rf $tmp/
+        deleteLastMessage
+    else
+        editLastMessage "$1 Plugins Disabled !"
+    fi
+}
 
 _checkUnoffPlugins() {
     # _setupPlugins Xtra true $LOAD_UNOFFICIAL_PLUGINS https://github.com/ashwinstr/Userge-Plugins-Fork.git
