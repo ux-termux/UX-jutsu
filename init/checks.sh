@@ -174,7 +174,7 @@ _flushMessages() {
 
 _server() {
     if test $API_PORT ; then 
-        python3 -c "import asyncio;asyncio.run(asyncio.create_subprocess_shell('python server.py'))"
+        python3 -c "import asyncio;asyncio.run(asyncio.create_subprocess_shell('python3 server.py'))"
         echo "API Started..."
     else
         echo "Skipping API..."
