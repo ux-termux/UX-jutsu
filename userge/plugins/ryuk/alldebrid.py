@@ -117,5 +117,5 @@ async def torrents(message: Message):
             if status == "Downloading":
                 ret_val += f"""__{round(int(i.get("downloaded",0))/1000000)}__/"""
             ret_val += f"""__{round(int(i.get("size",0))/1000000)}__ mb"""
-        ret_val += "\n\nSite: {WEB_TORRENT}\n\nWebDav : {WEBDAV}" if WEBDAV and WEB_TORRENT else ""
+        ret_val += f"\n\nSite: {WEB_TORRENT}\n\nWebDav : {WEBDAV}" if WEBDAV and WEB_TORRENT else ""
     await message.reply(ret_val)
