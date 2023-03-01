@@ -45,7 +45,7 @@ async def debrid(message: Message):
             query = {"link": link}
             d_link = WEB_HISTORY
         else:
-            endpoint = "/link/save"
+            endpoint = "/user/links/save"
             query = {"links[]": link}
             d_link = WEB_LINK
     else:
