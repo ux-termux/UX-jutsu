@@ -55,6 +55,8 @@ async def debrid(message: Message):
     unrestrict = await get_json(endpoint=endpoint, query=query)
     if not isinstance(unrestrict, dict) or "error" in unrestrict:
         return await message.reply(unrestrict)
+    if "-save" in message.flags:
+        return await message.reply("Link Successfully Saved.")
     if not link.startswith("http"):
         data = unrestrict["data"]["magnets"][0]
         name_ = data.get("name")
